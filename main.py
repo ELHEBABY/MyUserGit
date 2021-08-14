@@ -8,7 +8,7 @@ class Accueil(Screen):
         return self.ids.username.text
     def password(self):
         return self.ids.password.text
-    def signin(self):
+    def signin(self): #comment
         print(self.password()+" "+self.username())
 class User(Screen):
     info=0

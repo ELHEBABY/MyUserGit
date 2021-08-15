@@ -57,6 +57,8 @@ class User(Screen):
             if self.info==0:
                 self.info=1
                 self.informatique(widjet)
+class Profil(Screen):
+    pass
 class MyGrid(Screen):
     pass
 class WindowManager(ScreenManager):

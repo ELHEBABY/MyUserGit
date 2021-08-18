@@ -25,7 +25,7 @@ class Accueil(Screen):
         for x in users:
             if x[0] == self.ids.first.text and x[1] == self.ids.second.text:
                 return 1
-        return 0
+        return 2
         #if self.password()!="123":
          #   self.ids.erreur.text="erreur"
 class User(Screen):

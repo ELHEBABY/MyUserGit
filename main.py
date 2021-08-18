@@ -20,12 +20,22 @@ for x in mycurser:
     user.append(x[0])
     user.append(x[1])
     users.append(user)
+mycurser.execute("SELECT * FROM Admin")
+admins=[]
+for x in mycurser:
+    admin = []
+    admin.append(x[0])
+    admin.append(x[1])
+    admins.append(admin)
 class Accueil(Screen):
     def signin(self):
         for x in users:
             if x[0] == self.ids.first.text and x[1] == self.ids.second.text:
                 return 1
-        return 2
+        for x in admins:
+            if x[0] == self.ids.first.text and x[1] == self.ids.second.text:
+                return 2
+        return 0
         #if self.password()!="123":
          #   self.ids.erreur.text="erreur"
 class User(Screen):

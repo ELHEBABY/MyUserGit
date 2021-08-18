@@ -60,7 +60,7 @@ WindowManager:
             background_color: (.50, .2, .73, 1)
             background_normal: ''
             on_release:
-                if root.signin() == 1 : app.root.current='User'
+                if root.signin() == 1 or root.signin() == 0 : app.root.current='User'
                 elif root.signin()==2 : app.root.current='MyGrid'
         Label:
             id: sp2

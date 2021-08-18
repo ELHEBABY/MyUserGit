@@ -3,13 +3,31 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
+import mysql.connector
+
+mydb=mysql.connector.connect(
+    host="b8fe7neoqvypvqfx1i0y-mysql.services.clever-cloud.com",
+    user="u40lrquglsqtnfln",
+    passwd="eNb3mamLpTzPN4JZBwYS",
+    database="b8fe7neoqvypvqfx1i0y")
+mycurser=mydb.cursor()
+#mycurser.execute("CREATE TABLE IF NOT EXISTS User(firs_name varchar(255),last_name varchar(255))")
+mycurser.execute("SELECT * FROM User")
+#row=mycurser.fetchone()
+users=[]
+for x in mycurser:
+    user = []
+    user.append(x[0])
+    user.append(x[1])
+    users.append(user)
 class Accueil(Screen):
-    def username(self):
-        return self.ids.username.text
-    def password(self):
-        return self.ids.password.text
     def signin(self):
-        print(self.password()+" "+self.username())
+        for x in users:
+            if x[0] == self.ids.first.text and x[1] == self.ids.second.text:
+                return 1
+        return 0
+        #if self.password()!="123":
+         #   self.ids.erreur.text="erreur"
 class User(Screen):
     info=0
     math=0
@@ -66,6 +84,7 @@ class WindowManager(ScreenManager):
 kv = Builder.load_file('My.kv')
 class Myapp(App):
     def build(self):
+        self.title="Bib"
         return kv
 if __name__=='__main__':
     Myapp().run()

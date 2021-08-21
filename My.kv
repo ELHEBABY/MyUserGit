@@ -139,7 +139,7 @@ WindowManager:
         BoxLayout:
             BoxLayout:
                 padding:20
-                spacing:20
+                spacing:10
                 size_hint_y:.7
                 size_hint_x:.4
                 orientation:'vertical'
@@ -148,32 +148,32 @@ WindowManager:
                     text:"Informatique"
                     id:info
                     size_hint_y:.09
-                    font_size:25
+                    font_size:20
                     border_radius:[20,20,20,20]
                     group:'list'
                     on_state:root.change_screen(self)
                 ToggleButton:
                     text:"Mathématique"
                     size_hint_y:.09
-                    font_size:25
+                    font_size:20
                     group:'list'
                     on_state:root.change_screen
                 ToggleButton:
                     text:"Physique, Chimie"
                     size_hint_y:.09
-                    font_size:23
+                    font_size:20
                     group:'list'
                     on_state:root.change_screen
                 ToggleButton:
                     text:"Biologie, Géologie"
                     size_hint_y:.09
-                    font_size:23
+                    font_size:20
                     group:'list'
                     on_state:root.change_screen
                 ToggleButton:
                     text:"Autre"
                     size_hint_y:.09
-                    font_size:23
+                    font_size:20
                     group:'list'
                     on_state:root.change_screen
                     #on_release:app.root.current="MyGrid"
@@ -373,7 +373,8 @@ WindowManager:
                 text:"Deconexion"
                 size_hint: (0.6 , 0.04)
                 background_color: 223/255, 35/255, 45/255, 1
-                on_release:app.root.current="Accueil"
+                on_release:
+                    app.root.current="Accueil"
         BoxLayout:
             orientation: "vertical"
             size_hint_x:.8

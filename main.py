@@ -28,6 +28,17 @@ for x in mycurser:
     admin.append(x[0])
     admin.append(x[1])
     admins.append(admin)
+mycurser.execute("SELECT * FROM Livres")
+livres=[]
+for x in mycurser:
+    livre=[]
+    livre.append(x[0])
+    livre.append(x[1])
+    livre.append(x[2])
+    livre.append(x[3])
+    livre.append(x[4])
+    livres.append(livre)
+print(livres)
 class Accueil(Screen):
     def signin(self):
         a = 0
@@ -94,7 +105,6 @@ class User(Screen):
             self.ids.scr_math.current = 'scr_bio'
         elif instance.text=="Autre":
             self.ids.scr_math.current = 'scr_autre'
-
     def chercher(self,widjet):
         book=self.ids.book_name.text
         if  book in self.name_info:

@@ -3,6 +3,7 @@ WindowManager:
     User:
     MyGrid:
     Profil:
+    Paswdmodif:
 <Accueil>:
     name:"Accueil"
     id:main_win
@@ -60,8 +61,9 @@ WindowManager:
             background_color: (.50, .2, .73, 1)
             background_normal: ''
             on_release:
-                if root.signin() == 1 or root.signin() == 0 : app.root.current='User'
-                elif root.signin()==2 : app.root.current='MyGrid'
+                a=root.signin()
+                if a == 1 or a == 0 : app.root.current='User'
+                elif a ==2 : app.root.current='MyGrid'
         Label:
             id: sp2
 <User>:
@@ -148,24 +150,33 @@ WindowManager:
                     size_hint_y:.09
                     font_size:25
                     border_radius:[20,20,20,20]
-                    on_state:root.info_button(self)
+                    group:'list'
+                    on_state:root.change_screen(self)
                 ToggleButton:
                     text:"Mathématique"
                     size_hint_y:.09
                     font_size:25
+                    group:'list'
+                    on_state:root.change_screen
                 ToggleButton:
                     text:"Physique, Chimie"
                     size_hint_y:.09
                     font_size:23
+                    group:'list'
+                    on_state:root.change_screen
                 ToggleButton:
                     text:"Biologie, Géologie"
                     size_hint_y:.09
                     font_size:23
+                    group:'list'
+                    on_state:root.change_screen
                 ToggleButton:
                     text:"Autre"
                     size_hint_y:.09
                     font_size:23
-                    on_release:app.root.current="MyGrid"
+                    group:'list'
+                    on_state:root.change_screen
+                    #on_release:app.root.current="MyGrid"
             BoxLayout:
                 padding:10
                 spacing:3
@@ -205,17 +216,115 @@ WindowManager:
                 GridLayout
                     id:aff
                     cols:1
+                    Screen:
+                        id:scr_info
+                        name:"scr_info"
+                    Screen:
+                        id:scr_math
+                        name:"scr_math"
+                    Screen:
+                        id:scr_phy
+                        name:'scr_phy'
+                    Screen:
+                        id:scr_bio
+                        name:"scr_bio"
+                    Screen:
+                        id:scr_autre
+                        name:"scr_autre"
 <Profil>:
     name:"Profil"
     BoxLayout:
+        spacing:20
+        padding:20
         BoxLayout:
             id:profile
+            size_hint_x:.4
+            pos_hint:{"y":.2}
             Image:
                 source:'profil.png'
                 center_x:self.parent.center_x
                 center_y:self.parent.center_y-10
         BoxLayout:
+            orientation:"vertical"
+            spacing:20
+            padding:20
+            BoxLayout:
+                size_hint:.2,.8
+                pos_hint:{"x":.7,"y":.1}
+                Button:
+                    text:"Back"
+                    on_release:
+                        app.root.current="User"
+                        root.manager.transition.direction = "up"
+            BoxLayout:
+            BoxLayout:
+                #pos_hint:{'x':0}
+                size_hint_x:.3
+                Label:
+                    id :name_profil
+                    text:'nome prenom'
+                    color:0,0,0,1
+            BoxLayout:
+            BoxLayout:
+                Button:
+                    text:'change mode de passe'
+                    size_hint_x:.2
+                    on_release:
+                        app.root.current='Paswdmodif'
+                        root.manager.transition.direction = "down"
+            BoxLayout:
+
+<Paswdmodif>:
+    name:"Paswdmodif"
+    BoxLayout:
+        spacing:20
+        padding:20
         BoxLayout:
+            id:profile
+            size_hint_x:.4
+            pos_hint:{"y":.2}
+            Image:
+                source:'profil.png'
+                center_x:self.parent.center_x
+                center_y:self.parent.center_y-10
+        BoxLayout:
+            orientation:"vertical"
+            spacing:20
+            padding:20
+            BoxLayout:
+                size_hint:.2,.5
+                pos_hint:{"x":.7,"y":.1}
+                Button:
+                    text:"Back"
+                    on_release:
+                        app.root.current="Profil"
+                        root.manager.transition.direction = "up"
+            BoxLayout:
+            BoxLayout:
+                pos_hint:{'x':0.18}
+                size_hint:.5,.3
+                TextInput:
+                    hint_text:'Last password'
+                    color:0,0,0,1
+            BoxLayout:
+                size_hint:.5,.3
+                pos_hint:{'x':0.18}
+                TextInput:
+                    hint_text:'new password'
+                    color:0,0,0,1
+            BoxLayout:
+                size_hint:.5,.3
+                pos_hint:{'x':0.18}
+                Button:
+                    text:'save'
+                    size_hint_x:.2
+                    #on_release:app.root.current='Paswdmodif'
+            BoxLayout:
+
+
+
+
+
 <MyGrid>:
     name:"MyGrid"
     BoxLayout:

@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 import mysql.connector
+from kivymd.app import MDApp
 
 mydb=mysql.connector.connect(
     host="b8fe7neoqvypvqfx1i0y-mysql.services.clever-cloud.com",
@@ -29,13 +30,20 @@ for x in mycurser:
     admins.append(admin)
 class Accueil(Screen):
     def signin(self):
+        a = 0
         for x in users:
             if x[0] == self.ids.first.text and x[1] == self.ids.second.text:
-                return 1
+                self.ids.first.text=""
+                self.ids.second.text=""
+                a = 1
+                break
         for x in admins:
             if x[0] == self.ids.first.text and x[1] == self.ids.second.text:
-                return 2
-        return 0
+                self.ids.first.text=""
+                self.ids.second.text=""
+                a = 2
+                break
+        return a
         #if self.password()!="123":
          #   self.ids.erreur.text="erreur"
 class User(Screen):
@@ -75,10 +83,18 @@ class User(Screen):
                 details.add_widget(titre)
                 details.add_widget(Categorie)
                 details.add_widget(Disponible)
-    def info_button(self, widjet):
-        self.ids.chercher.text = "chercher"
-        if widjet.state == "down" and self.info == 0:
-            self.informatique(widjet)
+    def change_screen(self,instance):
+        if instance.text=='Informatique':
+            self.ids.scr_math.current = 'scr_info'
+        elif instance.text=='Mathématique':
+            self.ids.scr_math.current = 'scr_math'
+        elif instance.text=="Physique, Chimie":
+            self.ids.scr_math.current = 'scr_phy'
+        elif instance.text=="Biologie, Géologie":
+            self.ids.scr_math.current = 'scr_bio'
+        elif instance.text=="Autre":
+            self.ids.scr_math.current = 'scr_autre'
+
     def chercher(self,widjet):
         book=self.ids.book_name.text
         if  book in self.name_info:
@@ -87,18 +103,19 @@ class User(Screen):
                 self.informatique(widjet)
 class Profil(Screen):
     pass
+class Paswdmodif(Screen):
+    pass
 class MyGrid(Screen):
     pass
 class WindowManager(ScreenManager):
     pass
 kv = Builder.load_file('My.kv')
-class Myapp(App):
+class Myapp(MDApp):
     def build(self):
         self.title="Bib"
         return kv
 if __name__=='__main__':
     Myapp().run()
-
 
 
 #book_recherch_info=["info","Info","informatique","Informatique"]

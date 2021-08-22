@@ -38,6 +38,7 @@ for x in mycurser:
     livre.append(x[3])
     livre.append(x[4])
     livres.append(livre)
+print(livres)
 livre_math=[]
 livre_pc=[]
 livre_info=[]
@@ -55,7 +56,9 @@ for x in livres:
     elif livre[0]=="Math":
         livre_math.append(livre)
     elif livre[0]=="pc":
-        livre_pc.append(livre)
+        for c in range(10):
+            livre_pc.append(livre)
+            c+=1
     elif livre[0]=="bio":
         livre_bio.append(livre)
     elif livre[0]=="aut":
@@ -94,20 +97,21 @@ class User(Screen):
                  {"isbn": "2", "name": "info2", "categorie": "info","Disponible":"oui"},
                  {"isbn": "3", "name": "info3", "categorie": "info","Disponible":"oui"}]
     name_info = ["info","Info","informatique","Informatique"]
-    def pc_button(self):
-        #self.ids.loll.cols=5
-        for i in range(len(livre_pc)):
-            aff_tab=self.ids.scr_phy
-            details = BoxLayout(size_hint_y=None, height=30, pos_hint={"top": 1})
-            aff_tab.add_widget(details)
-            ISBN = Label(text=str(livre_pc[i][1]), size_hint_x=.1, color=(0, 0, 0, 1))
-            Titre = Label(text=str(livre_pc[i][2]), size_hint_x=.1, color=(0, 0, 0, 1))
-            Categorie = Label(text=str(livre_pc[i][0]), size_hint_x=.1, color=(0, 0, 0, 1))
-            Disponible = Label(text=str(livre_pc[i][4]), size_hint_x=.1, color=(0, 0, 0, 1))
-            details.add_widget(ISBN)
-            details.add_widget(Titre)
-            details.add_widget(Categorie)
-            details.add_widget(Disponible)
+    def __init__(self,table='', **kwargs):
+        super().__init__(**kwargs)
+
+    def table(self):
+        aff_tab=self.ids.afftable
+        details = BoxLayout(size_hint_y=None, height=30, pos_hint={"top": 1})
+        aff_tab.add_widget(details)
+        ISBN = Label(text='ISBN', size_hint_x=.1, color=(0, 0, 0, 1))
+        Titre = Label(text='Titre', size_hint_x=.1, color=(0, 0, 0, 1))
+        Categorie = Label(text='Categorie', size_hint_x=.1, color=(0, 0, 0, 1))
+        Disponible = Label(text='Disponible', size_hint_x=.1, color=(0, 0, 0, 1))
+        details.add_widget(ISBN)
+        details.add_widget(Titre)
+        details.add_widget(Categorie)
+        details.add_widget(Disponible)
     def informatique(self,widjet):
             self.info=1
            # self.table()
@@ -134,14 +138,57 @@ class User(Screen):
             self.ids.scr_mng.current = 'scr_bio'
         elif instance.text=="Autre":
             self.ids.scr_mng.current = 'scr_autre'
-
-
+        print(self.ids.scr_mng.current)
     def chercher(self,widjet):
         book=self.ids.book_name.text
         if  book in self.name_info:
             if self.info==0:
                 self.info=1
                 self.informatique(widjet)
+
+    def test(self,instance):
+        if instance.state == "down":
+            if instance.text == 'Informatique' :
+                self.ids.scr_mng.current = 'scr_info'
+                livre_diff = livre_info
+                table_floor_layout=self.ids.table_floor_layout_info
+                table_floor=self.ids.table_floor_info
+            elif instance.text == 'Mathématique':
+                self.ids.scr_mng.current = 'scr_math'
+                livre_diff = livre_math
+                table_floor_layout = self.ids.table_floor_layout_math
+                table_floor = self.ids.table_floor_math
+            elif instance.text == "Physique, Chimie":
+                self.ids.scr_mng.current = 'scr_phy'
+                livre_diff=livre_pc
+                table_floor_layout=self.ids.table_floor_layout_pc
+                table_floor = self.ids.table_floor_pc
+            elif instance.text == "Biologie, Géologie":
+                self.ids.scr_mng.current = 'scr_bio'
+                livre_diff = livre_bio
+                table_floor_layout = self.ids.table_floor_layout_bio
+                table_floor = self.ids.table_floor_bio
+            elif instance.text == "Autre":
+                self.ids.scr_mng.current = 'scr_autre'
+                livre_diff = livre_aut
+                table_floor_layout = self.ids.table_floor_layout_autre
+                table_floor = self.ids.table_floor_autre
+        else:
+            self.ids.scr_mng.current = 'scr'
+        if self.ids.scr_mng.current != 'scr':
+            self.columns = 5
+            table_data = []
+            for y in range(5) :
+                table_data.append({'text':str(y), 'size_hint_y': None, 'height': 30,
+                                   'bcolor': (.05, .30, .80, 1)})  # append the data
+
+            for z in range(len(livre_diff)):
+                for y in range(5):
+                    table_data.append({'text': str(livre_diff[z][y]), 'size_hint_y': None, 'height': 20,
+                                       'bcolor': (.06, .25, .50, 1)})  # append the data
+
+            table_floor_layout.cols = self.columns  # define value of cols to the value of self.columns
+            table_floor.data = table_data  # add table_data to data value
 class Profil(Screen):
     pass
 class Paswdmodif(Screen):
@@ -151,9 +198,11 @@ class MyGrid(Screen):
 class WindowManager(ScreenManager):
     pass
 kv = Builder.load_file('My.kv')
-class Myapp(MDApp):
+class lolapp(App):
     def build(self):
         self.title="Bib"
         return kv
 if __name__=='__main__':
-    Myapp().run()
+    lolapp().run()
+
+mydb.close()

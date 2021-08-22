@@ -137,6 +137,8 @@ WindowManager:
                         color:(1,1,1,1)
                         on_release:root.chercher(self)
         BoxLayout:
+            spacing:10
+            padding:20
             BoxLayout:
                 padding:20
                 spacing:10
@@ -151,196 +153,137 @@ WindowManager:
                     font_size:20
                     border_radius:[20,20,20,20]
                     group:'list'
-                    on_state:root.change_screen(self)
+                    on_state:root.test(self)
                 ToggleButton:
                     text:"Mathématique"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen(self)
+                    on_state:root.test(self)
                 ToggleButton:
                     text:"Physique, Chimie"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
                     on_state:
-                        root.change_screen(self)
-                        root.pc_button()
+                        root.test(self)
+                        #root.pc_button()
                 ToggleButton:
                     text:"Biologie, Géologie"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen(self)
+                    on_state:root.test(self)
                 ToggleButton:
                     text:"Autre"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen(self)
+                    on_state:root.test(self)
                     #on_release:app.root.current="MyGrid"
             BoxLayout:
-                padding:10
-                spacing:3
-                orientation:'vertical'
-                BoxLayout:
-                    id:afftable
-                    padding:20
-                    spacing:20
-                    size_hint_y:.1
-                    pos_hint:{"top":1}
-                BoxLayout:
-                    id:aff
-                    cols:1
-                    ScreenManager:
-                        id:scr_mng
-                        Screen:
-                        Screen:
-                            id:scr_info
-                            name:"scr_info"
-                            #cols:1
-                            BoxLayout:
-                                size_hint_y:None
-                                pos_hint:{"top":1}
-                                height:30
-                                canvas.before:
-                                    Color:
-                                        rgba:(.06,.45,.45,1)
-                                    Rectangle:
-                                        size:self.size
-                                        pos:self.pos
-                                Label:
-                                    id:ISBN
-                                    text:"ISBN"
-                                    size_hint_x:.15
-                                Label:
-                                    id :Titre
-                                    text:"Titre"
-                                    size_hint_x:.4
-                                Label:
-                                    id:Categorie
-                                    text:"Categorie"
-                                    size_hint_x:.2
-                                Label:
-                                    id:Disponible
-                                    text:"Disponible"
-                                    size_hint_x:.25
-                        Screen:
-                            id:scr_math
-                            name:"scr_math"
-                            BoxLayout:
-                                size_hint_y:None
-                                pos_hint:{"top":1}
-                                height:30
-                                canvas.before:
-                                    Color:
-                                        rgba:(.06,.45,.45,1)
-                                    Rectangle:
-                                        size:self.size
-                                        pos:self.pos
-                                Label:
-                                    id:ISBN
-                                    text:"ISBN"
-                                    size_hint_x:.15
-                                Label:
-                                    id :Titre
-                                    text:"Titre"
-                                    size_hint_x:.4
-                                Label:
-                                    id:Categorie
-                                    text:"Categorie"
-                                    size_hint_x:.2
-                                Label:
-                                    id:Disponible
-                                    text:"Disponible"
-                                    size_hint_x:.25
-                        Screen:
-                            id:scr_phy
-                            name:'scr_phy'
-                            BoxLayout:
-                                size_hint_y:None
-                                pos_hint:{"top":1}
-                                height:30
-                                canvas.before:
-                                    Color:
-                                        rgba:(.06,.45,.45,1)
-                                    Rectangle:
-                                        size:self.size
-                                        pos:self.pos
-                                Label:
-                                    id:ISBN
-                                    text:"ISBN"
-                                    size_hint_x:.15
-                                Label:
-                                    id :Titre
-                                    text:"Titre"
-                                    size_hint_x:.4
-                                Label:
-                                    id:Categorie
-                                    text:"Categorie"
-                                    size_hint_x:.2
-                                Label:
-                                    id:Disponible
-                                    text:"Disponible"
-                                    size_hint_x:.25
-                        Screen:
-                            id:scr_bio
-                            name:"scr_bio"
-                            BoxLayout:
-                                size_hint_y:None
-                                pos_hint:{"top":1}
-                                height:30
-                                canvas.before:
-                                    Color:
-                                        rgba:(.06,.45,.45,1)
-                                    Rectangle:
-                                        size:self.size
-                                        pos:self.pos
-                                Label:
-                                    id:ISBN
-                                    text:"ISBN"
-                                    size_hint_x:.15
-                                Label:
-                                    id :Titre
-                                    text:"Titre"
-                                    size_hint_x:.4
-                                Label:
-                                    id:Categorie
-                                    text:"Categorie"
-                                    size_hint_x:.2
-                                Label:
-                                    id:Disponible
-                                    text:"Disponible"
-                                    size_hint_x:.25
-                        Screen:
-                            id:scr_autre
-                            name:"scr_autre"
-                            BoxLayout:
-                                size_hint_y:None
-                                pos_hint:{"top":1}
-                                height:30
-                                canvas.before:
-                                    Color:
-                                        rgba:(.06,.45,.45,1)
-                                    Rectangle:
-                                        size:self.size
-                                        pos:self.pos
-                                Label:
-                                    id:ISBN
-                                    text:"ISBN"
-                                    size_hint_x:.15
-                                Label:
-                                    id :Titre
-                                    text:"Titre"
-                                    size_hint_x:.4
-                                Label:
-                                    id:Categorie
-                                    text:"Categorie"
-                                    size_hint_x:.2
-                                Label:
-                                    id:Disponible
-                                    text:"Disponible"
-                                    size_hint_x:.25
+                id:aff
+                cols:1
+                ScreenManager:
+                    id:scr_mng
+                    Screen:
+                    Screen:
+                        id:scr_info
+                        name:"scr_info"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_info
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_info
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+                    Screen:
+                        id:scr_math
+                        name:"scr_math"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_math
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_math
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+                    Screen:
+                        id:scr_phy
+                        name:"scr_phy"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_pc
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_pc
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+                    Screen:
+                        id:scr_bio
+                        name:"scr_bio"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_bio
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_bio
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+                    Screen:
+                        id:scr_autre
+                        name:"scr_autre"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_autre
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_autre
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+                    Screen:
+                        id:scr
+                        name:"scr"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_autre
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_autre
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+
 
 
 
@@ -575,10 +518,11 @@ WindowManager:
             size:self.size
             pos:self.pos
             radius:self.border_radius
-<table_label@Label>
+<CustomLabel@Label>:
+    bcolor: (1,1,1,1)
     canvas.before:
         Color:
-            rgba:(1,1,1,1)
-        RoundedRectangle:
-            size:self.size
-            pos:self.pos
+            rgba: root.bcolor
+        Rectangle:
+            size: self.size
+            pos: self.pos

@@ -157,25 +157,27 @@ WindowManager:
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen
+                    on_state:root.change_screen(self)
                 ToggleButton:
                     text:"Physique, Chimie"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen
+                    on_state:
+                        root.change_screen(self)
+                        root.pc_button()
                 ToggleButton:
                     text:"Biologie, Géologie"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen
+                    on_state:root.change_screen(self)
                 ToggleButton:
                     text:"Autre"
                     size_hint_y:.09
                     font_size:20
                     group:'list'
-                    on_state:root.change_screen
+                    on_state:root.change_screen(self)
                     #on_release:app.root.current="MyGrid"
             BoxLayout:
                 padding:10
@@ -188,49 +190,163 @@ WindowManager:
                     size_hint_y:.1
                     pos_hint:{"top":1}
                 BoxLayout:
-                    size_hint_y:None
-                    pos_hint:{"top":0.2}
-                    height:30
-                    canvas.before:
-                        Color:
-                            rgba:(.06,.45,.45,1)
-                        Rectangle:
-                            size:self.size
-                            pos:self.pos
-                    Label:
-                        id:ISBN
-                        text:"ISBN"
-                        size_hint_x:.15
-                    Label:
-                        id :Titre
-                        text:"Titre"
-                        size_hint_x:.4
-                    Label:
-                        id:Categorie
-                        text:"Categorie"
-                        size_hint_x:.2
-                    Label:
-                        id:Disponible
-                        text:"Disponible"
-                        size_hint_x:.25
-                GridLayout
                     id:aff
                     cols:1
-                    Screen:
-                        id:scr_info
-                        name:"scr_info"
-                    Screen:
-                        id:scr_math
-                        name:"scr_math"
-                    Screen:
-                        id:scr_phy
-                        name:'scr_phy'
-                    Screen:
-                        id:scr_bio
-                        name:"scr_bio"
-                    Screen:
-                        id:scr_autre
-                        name:"scr_autre"
+                    ScreenManager:
+                        id:scr_mng
+                        Screen:
+                        Screen:
+                            id:scr_info
+                            name:"scr_info"
+                            #cols:1
+                            BoxLayout:
+                                size_hint_y:None
+                                pos_hint:{"top":1}
+                                height:30
+                                canvas.before:
+                                    Color:
+                                        rgba:(.06,.45,.45,1)
+                                    Rectangle:
+                                        size:self.size
+                                        pos:self.pos
+                                Label:
+                                    id:ISBN
+                                    text:"ISBN"
+                                    size_hint_x:.15
+                                Label:
+                                    id :Titre
+                                    text:"Titre"
+                                    size_hint_x:.4
+                                Label:
+                                    id:Categorie
+                                    text:"Categorie"
+                                    size_hint_x:.2
+                                Label:
+                                    id:Disponible
+                                    text:"Disponible"
+                                    size_hint_x:.25
+                        Screen:
+                            id:scr_math
+                            name:"scr_math"
+                            BoxLayout:
+                                size_hint_y:None
+                                pos_hint:{"top":1}
+                                height:30
+                                canvas.before:
+                                    Color:
+                                        rgba:(.06,.45,.45,1)
+                                    Rectangle:
+                                        size:self.size
+                                        pos:self.pos
+                                Label:
+                                    id:ISBN
+                                    text:"ISBN"
+                                    size_hint_x:.15
+                                Label:
+                                    id :Titre
+                                    text:"Titre"
+                                    size_hint_x:.4
+                                Label:
+                                    id:Categorie
+                                    text:"Categorie"
+                                    size_hint_x:.2
+                                Label:
+                                    id:Disponible
+                                    text:"Disponible"
+                                    size_hint_x:.25
+                        Screen:
+                            id:scr_phy
+                            name:'scr_phy'
+                            BoxLayout:
+                                size_hint_y:None
+                                pos_hint:{"top":1}
+                                height:30
+                                canvas.before:
+                                    Color:
+                                        rgba:(.06,.45,.45,1)
+                                    Rectangle:
+                                        size:self.size
+                                        pos:self.pos
+                                Label:
+                                    id:ISBN
+                                    text:"ISBN"
+                                    size_hint_x:.15
+                                Label:
+                                    id :Titre
+                                    text:"Titre"
+                                    size_hint_x:.4
+                                Label:
+                                    id:Categorie
+                                    text:"Categorie"
+                                    size_hint_x:.2
+                                Label:
+                                    id:Disponible
+                                    text:"Disponible"
+                                    size_hint_x:.25
+                        Screen:
+                            id:scr_bio
+                            name:"scr_bio"
+                            BoxLayout:
+                                size_hint_y:None
+                                pos_hint:{"top":1}
+                                height:30
+                                canvas.before:
+                                    Color:
+                                        rgba:(.06,.45,.45,1)
+                                    Rectangle:
+                                        size:self.size
+                                        pos:self.pos
+                                Label:
+                                    id:ISBN
+                                    text:"ISBN"
+                                    size_hint_x:.15
+                                Label:
+                                    id :Titre
+                                    text:"Titre"
+                                    size_hint_x:.4
+                                Label:
+                                    id:Categorie
+                                    text:"Categorie"
+                                    size_hint_x:.2
+                                Label:
+                                    id:Disponible
+                                    text:"Disponible"
+                                    size_hint_x:.25
+                        Screen:
+                            id:scr_autre
+                            name:"scr_autre"
+                            BoxLayout:
+                                size_hint_y:None
+                                pos_hint:{"top":1}
+                                height:30
+                                canvas.before:
+                                    Color:
+                                        rgba:(.06,.45,.45,1)
+                                    Rectangle:
+                                        size:self.size
+                                        pos:self.pos
+                                Label:
+                                    id:ISBN
+                                    text:"ISBN"
+                                    size_hint_x:.15
+                                Label:
+                                    id :Titre
+                                    text:"Titre"
+                                    size_hint_x:.4
+                                Label:
+                                    id:Categorie
+                                    text:"Categorie"
+                                    size_hint_x:.2
+                                Label:
+                                    id:Disponible
+                                    text:"Disponible"
+                                    size_hint_x:.25
+
+
+
+
+
+
 <Profil>:
     name:"Profil"
     BoxLayout:
@@ -459,3 +575,10 @@ WindowManager:
             size:self.size
             pos:self.pos
             radius:self.border_radius
+<table_label@Label>
+    canvas.before:
+        Color:
+            rgba:(1,1,1,1)
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos

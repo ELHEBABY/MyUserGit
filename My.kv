@@ -135,7 +135,8 @@ WindowManager:
                         size_hint_x:.4
                         text:"chercher"
                         color:(1,1,1,1)
-                        on_release:root.chercher(self)
+                        on_release:
+                            root.recherche()
         BoxLayout:
             spacing:10
             padding:20
@@ -149,6 +150,7 @@ WindowManager:
                 ToggleButton:
                     text:"Informatique"
                     id:info
+                    name:"info"
                     size_hint_y:.09
                     font_size:20
                     border_radius:[20,20,20,20]
@@ -156,12 +158,14 @@ WindowManager:
                     on_state:root.test(self)
                 ToggleButton:
                     text:"Mathématique"
+                    id:mathematique
                     size_hint_y:.09
                     font_size:20
                     group:'list'
                     on_state:root.test(self)
                 ToggleButton:
                     text:"Physique, Chimie"
+                    id:pc
                     size_hint_y:.09
                     font_size:20
                     group:'list'
@@ -170,12 +174,14 @@ WindowManager:
                         #root.pc_button()
                 ToggleButton:
                     text:"Biologie, Géologie"
+                    id:bio
                     size_hint_y:.09
                     font_size:20
                     group:'list'
                     on_state:root.test(self)
                 ToggleButton:
                     text:"Autre"
+                    id:autre
                     size_hint_y:.09
                     font_size:20
                     group:'list'
@@ -272,11 +278,27 @@ WindowManager:
                         name:"scr"
                         RecycleView:
                             viewclass: 'CustomLabel'
-                            id: table_floor_autre
+                            id: table_floor
                             spacing:10
                             padding:20
                             RecycleGridLayout:
-                                id: table_floor_layout_autre
+                                id: table_floor_layout
+                                cols: 5
+                                default_size: (None,250)
+                                default_size_hint: (1,None)
+                                size_hint_y: None
+                                height: self.minimum_height
+                                spacing: 5
+                    Screen:
+                        id:scr_rech
+                        name:"scr_rech"
+                        RecycleView:
+                            viewclass: 'CustomLabel'
+                            id: table_floor_rech
+                            spacing:10
+                            padding:20
+                            RecycleGridLayout:
+                                id: table_floor_layout_rech
                                 cols: 5
                                 default_size: (None,250)
                                 default_size_hint: (1,None)

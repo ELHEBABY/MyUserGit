@@ -244,14 +244,18 @@ class Paswdmodif(Screen):
     pass
 class MyGrid(Screen):
     pass
+class Secondwindow(Screen):
+    pass
+class ThirdWindow(Screen):
+    pass
 class WindowManager(ScreenManager):
     pass
 kv = Builder.load_file('My.kv')
-class lolapp(App):
+class Myapp(App):
     def build(self):
         self.title="Bib"
         return kv
 if __name__=='__main__':
-    lolapp().run()
+    Myapp().run()
 
 mydb.close()

@@ -2,6 +2,8 @@ WindowManager:
     Accueil:
     User:
     MyGrid:
+    Secondwindow:
+    ThirdWindow:
     Profil:
     Paswdmodif:
 <Accueil>:
@@ -62,8 +64,8 @@ WindowManager:
             background_normal: ''
             on_release:
                 a=root.signin()
-                if a == 1 or a == 0 : app.root.current='User'
-                elif a ==2 : app.root.current='MyGrid'
+                if a == 1 : app.root.current='User'
+                elif a ==2 or a == 0 : app.root.current='MyGrid'
         Label:
             id: sp2
 <User>:
@@ -404,68 +406,90 @@ WindowManager:
 
 
 
-
-
 <MyGrid>:
-    name:"MyGrid"
+    name: "MyGrid"
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 40
+        padding:40
+        pos_hint:{"x":.8}
+        pos_hint:{"y":.4}
+        size_hint:(0.9 , 0.2)
+
+        Button:
+            text:"Livres"
+            background_color: 223/255, 35/255, 45/255, 1
+            on_release:
+                app.root.current = "livre"
+                root.manager.transition.direction = "left"
+        Button:
+            text:"Etudiant"
+            background_color: 223/255, 35/255, 45/255, 1
+            on_release:
+                app.root.current = "user"
+                root.manager.transition.direction = "left"
+        Button:
+            text:"Adhérent"
+            background_color:223/255, 35/255, 45/255, 1
+        Button:
+            text:"Profile"
+            background_color: 223/255, 35/255, 45/255, 1
+
+        Button:
+            text:"Deconexion"
+            background_color: 223/255, 35/255, 45/255, 1
+            on_release:
+                app.root.current = "Accueil"
+                root.manager.transition.direction = "right"
+
+
+<Secondwindow>:
+    name: "livre"
     BoxLayout:
         canvas.before:
             Color:
-                rgba: 1, 1, 1, 1
+                rgba: 0, 0, 0, 1
             Rectangle:
                 size: self.size
                 pos: self.pos
         BoxLayout:
+            pos_hint: {'top': 0.8}
             size_hint_x:.3
             orientation: "vertical"
             #size: root.width, root.height
             spacing: 15
-            padding: 10
-            Button:
-                text:"Admin"
-                size_hint: (0.6 , 0.04)
-                background_color: 223/255, 35/255, 45/255, 1
+            padding: 20
             Button:
                 text:"Ajouter un livre"
-                size_hint: (1 , 0.04)
+                size_hint: (0.7 , 0.2)
                 background_color: 223/255, 35/255, 45/255, 1
             Button:
                 text:"Modifier un livre"
-                size_hint: (1 , 0.04)
+                size_hint: (0.7, 0.2)
                 background_color: 223/255, 35/255, 45/255, 1
             Button:
                 text:"Supprimer un livre"
-                size_hint: (1 , 0.04)
+                size_hint: (0.7 , 0.2)
                 background_color: 223/255, 35/255, 45/255, 1
             Button:
-                text:"Ajouter un adhérent "
-                size_hint: (1 , 0.04)
-                background_color: 223/255, 35/255, 45/255, 1
-            Button:
-                text:"Modifier un adhérent"
-                size_hint: (1 , 0.04)
-                background_color: 223/255, 35/255, 45/255, 1
-            Button:
-                text:"Supprimer un adhérent"
-
-                size_hint: (1 , 0.04)
-                background_color: 223/255, 35/255, 45/255, 1
-            Button:
-                text:"Deconexion"
-                size_hint: (0.6 , 0.04)
+                text:"Retour"
+                size_hint: (0.7 , 0.2)
                 background_color: 223/255, 35/255, 45/255, 1
                 on_release:
-                    app.root.current="Accueil"
+                    app.root.current = "MyGrid"
+                    root.manager.transition.direction = "right"
+            Label:
+                id:nom
         BoxLayout:
             orientation: "vertical"
             size_hint_x:.8
             size_hint_y:.3
             pos_hint:{"y":.7}
-            spacing: 20
-            padding: 20
+            spacing: 10
+            padding: 30
             canvas.before:
                 Color:
-                    rgba:1, 1,1, 1
+                    rgba:0, 0,0, 1
                 Rectangle:
                     size: self.size
                     pos: self.pos
@@ -493,15 +517,45 @@ WindowManager:
                         text:"Autres"
                         #size_hint: (0.4 , 0.1)
                         background_color: 223/255, 35/255, 45/255, 1
-                BoxLayout:
-                    size_hint_x:.5
-                    pos_hint:{"center_x":.5}
-                    TextInput:
-                        text: "Recherche"
-                        color: 1,1,1,1
-                        background_color: 0.5,0.7,0.1 ,1
-                        multiline:False
-                BoxLayout:
+
+
+<ThirdWindow>
+    name: "user"
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        BoxLayout:
+            pos_hint: {'top': 0.8}
+            size_hint_x:.3
+            orientation: "vertical"
+            #size: root.width, root.height
+            spacing: 15
+            padding: 20
+            Button:
+                text:"Ajouter un Adhérent"
+                size_hint: (0.3 , 0.2)
+                background_color: 223/255, 35/255, 45/255, 1
+            Button:
+                text:"Modifier un Adhérent"
+                size_hint: (0.3, 0.2)
+                background_color: 223/255, 35/255, 45/255, 1
+            Button:
+                text:"Supprimer un Adhérent"
+                size_hint: (0.3 , 0.2)
+                background_color: 223/255, 35/255, 45/255, 1
+            Button:
+                text:"Retour"
+                size_hint: (0.3 , 0.2)
+                background_color: 223/255, 35/255, 45/255, 1
+                on_release:
+                    app.root.current = "MyGrid"
+                    root.manager.transition.direction = "right"
+            Label:
+                id:nom
 
 <RoundedButton@Button>:
     background_color:(0,0,0,0)

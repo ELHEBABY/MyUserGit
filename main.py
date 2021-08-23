@@ -231,7 +231,6 @@ class User(Screen):
             self.ids.bio.state="normal"
             self.ids.autre.state="down"
             self.test_titre(book)
-
     def test(self,instance):
         if instance.state == "down":
             self.test_titre(instance.text)
@@ -244,8 +243,9 @@ class Paswdmodif(Screen):
     pass
 class MyGrid(Screen):
     pass
-class Secondwindow(Screen):
-    pass
+class Secondwindow(User,Screen):
+    def modifier_livre(self):
+        self.ids.scr_mng.current = 'modifier_livre'
 class ThirdWindow(Screen):
     pass
 class WindowManager(ScreenManager):

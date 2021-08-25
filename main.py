@@ -242,12 +242,200 @@ class Profil(Screen):
 class Paswdmodif(Screen):
     pass
 class MyGrid(Screen):
-    pass
-class Secondwindow(User,Screen):
-    def modifier_livre(self):
-        self.ids.scr_mng.current = 'modifier_livre'
-class ThirdWindow(Screen):
-    pass
+    def change_screen(self, instance):
+        if instance.text == 'Livres':
+            self.ids.tout.current = 'livres'
+
+    def change_screen_toog(self, instance):
+        if instance.state == "down":
+            if instance.text == 'Mathématique':
+                self.ids.tout.current = 'scr_math'
+            elif instance.text == "Physique, Chimie":
+                self.ids.tout.current = 'scr_phy'
+            elif instance.text == "Biologie, Géologie":
+                self.ids.tout.current = 'scr_bio'
+            elif instance.text == "Autre":
+                self.ids.tout.current = 'scr_autre'
+            elif instance.text == "Ajouter un livre":
+                self.ids.livre.current = 'ajouter_un_livre'
+            elif instance.text == "Modifier un livre":
+                self.ids.livre.current = 'modifier_un_livre'
+            elif instance.text == "Supprimer un livre":
+                self.ids.livre.current = 'supprimer_un_livre'
+        else:
+            self.ids.livre.current = 'scr'
+
+    def table(self, listt, table_floor_layout, table_floor):
+        self.columns = 4
+        table_data = []
+        titrr = ['ISBN', 'Titre', 'Auteur', 'Desponile']
+        for y in range(4):
+            table_data.append({'text': titrr[y], 'size_hint_y': None, 'height': 30,
+                               'bcolor': (.05, .30, .80, 1)})  # append the data
+            y = y + 1
+        for z in range(len(listt)):
+            for y in range(4):
+                table_data.append({'text': str(listt[z][y + 1]), 'size_hint_y': None, 'height': 20,
+                                   'bcolor': (.06, .25, .50, 1)})  # append the data
+
+        table_floor_layout.cols = self.columns  # define value of cols to the value of self.columns
+        table_floor.data = table_data  # add table_data to data value
+
+    def test(self, instance):
+        if instance.state == "down":
+            if instance.text == 'Informatique':
+                self.ids.scr_mng.current = 'scr_info'
+                livre_diff = livre_info
+                table_floor_layout = self.ids.table_floor_layout_info
+                table_floor = self.ids.table_floor_info
+            elif instance.text == 'Mathématique':
+                self.ids.scr_mng.current = 'scr_math'
+                livre_diff = livre_math
+                table_floor_layout = self.ids.table_floor_layout_math
+                table_floor = self.ids.table_floor_math
+            elif instance.text == "Physique, Chimie":
+                self.ids.scr_mng.current = 'scr_phy'
+                livre_diff = livre_pc
+                table_floor_layout = self.ids.table_floor_layout_pc
+                table_floor = self.ids.table_floor_pc
+            elif instance.text == "Biologie, Géologie":
+                self.ids.scr_mng.current = 'scr_bio'
+                livre_diff = livre_bio
+                table_floor_layout = self.ids.table_floor_layout_bio
+                table_floor = self.ids.table_floor_bio
+            elif instance.text == "Autre":
+                self.ids.scr_mng.current = 'scr_autre'
+                livre_diff = livre_aut
+                table_floor_layout = self.ids.table_floor_layout_autre
+                table_floor = self.ids.table_floor_autre
+        else:
+            self.ids.scr_mng.current = 'scr'
+        if self.ids.scr_mng.current != 'scr':
+            self.columns = 5
+            table_data = []
+            for y in range(5):
+                table_data.append({'text': str(y), 'size_hint_y': None, 'height': 30,
+                                   'bcolor': (.05, .30, .80, 1)})  # append the data
+
+            for z in range(len(livre_diff)):
+                for y in range(5):
+                    table_data.append({'text': str(livre_diff[z][y]), 'size_hint_y': None, 'height': 20,
+                                       'bcolor': (.06, .25, .50, 1)})  # append the data
+
+            table_floor_layout.cols = self.columns  # define value of cols to the value of self.columns
+            table_floor.data = table_data  # add table_data to data value
+
+    def test_titre(self, titre):
+        a = 0
+        if titre in liste_recherch_info:
+            self.ids.scr_mng.current = 'scr_info'
+            livre_diff = livre_info
+            table_floor_layout = self.ids.table_floor_layout_info
+            table_floor = self.ids.table_floor_info
+            a = 1
+        elif titre in liste_recherch_math:
+            self.ids.scr_mng.current = 'scr_math'
+            livre_diff = livre_math
+            table_floor_layout = self.ids.table_floor_layout_math
+            table_floor = self.ids.table_floor_math
+            a = 2
+        elif titre in liste_recherch_pc:
+            self.ids.scr_mng.current = 'scr_phy'
+            livre_diff = livre_pc
+            table_floor_layout = self.ids.table_floor_layout_pc
+            table_floor = self.ids.table_floor_pc
+            a = 3
+        elif titre in liste_recherch_bio:
+            self.ids.scr_mng.current = 'scr_bio'
+            livre_diff = livre_bio
+            table_floor_layout = self.ids.table_floor_layout_bio
+            table_floor = self.ids.table_floor_bio
+            a = 4
+        elif titre == "Autre":
+            self.ids.scr_mng.current = 'scr_autre'
+            livre_diff = livre_aut
+            table_floor_layout = self.ids.table_floor_layout_autre
+            table_floor = self.ids.table_floor_autre
+            a = 5
+        else:
+            self.ids.scr_mng.current = 'scr'
+        if self.ids.scr_mng.current != 'scr':
+            self.table(livre_diff, table_floor_layout, table_floor)
+        return a
+
+    def recherche(self):
+        book = self.ids.book_name.text
+        a = self.test_titre(book)
+        if a == 0 and book != '':
+            b = 0
+            self.ids.mathematique.state = "normal"
+            self.ids.info.state = "normal"
+            self.ids.pc.state = "normal"
+            self.ids.bio.state = "normal"
+            self.ids.autre.state = "normal"
+            table_floor_layout = self.ids.table_floor_layout_rech
+            table_floor = self.ids.table_floor_rech
+            livre_choix = []
+            for x in livres:
+                if book == str(x[2]):
+                    livre_choix.append(x)
+                    b = 1
+            if b == 0:
+                for x in livres:
+                    if book == str(x[1]):
+                        livre_choix.append(x)
+                        b = 1
+            if b == 0:
+                for x in livres:
+                    if book == str(x[3]):
+                        livre_choix.append(x)
+                        b = 1
+            if b == 1:
+                self.ids.scr_mng.current = 'scr_rech'
+                self.table(livre_choix, table_floor_layout, table_floor)
+        elif a == 1:
+            self.ids.mathematique.state = "normal"
+            self.ids.pc.state = "normal"
+            self.ids.bio.state = "normal"
+            self.ids.autre.state = "normal"
+            self.test_titre(book)
+        elif a == 2:
+            self.ids.mathematique.state = "down"
+            self.ids.info.state = "normal"
+            self.ids.pc.state = "normal"
+            self.ids.bio.state = "normal"
+            self.ids.autre.state = "normal"
+            self.test_titre(book)
+        elif a == 3:
+            self.ids.mathematique.state = "normal"
+            self.ids.info.state = "normal"
+            self.ids.bio.state = "normal"
+            self.ids.pc.state = "down"
+            self.ids.autre.state = "normal"
+            self.test_titre(book)
+        elif a == 4:
+            self.ids.mathematique.state = "normal"
+            self.ids.info.state = "normal"
+            self.ids.pc.state = "normal"
+            self.ids.bio.state = "down"
+            self.ids.autre.state = "normal"
+            self.test_titre(book)
+        elif a == 5:
+            self.ids.mathematique.state = "normal"
+            self.ids.info.state = "normal"
+            self.ids.pc.state = "normal"
+            self.ids.bio.state = "normal"
+            self.ids.autre.state = "down"
+            self.test_titre(book)
+
+    def ajouter_un_livre(self):
+        print('ajout')
+
+    def modifier_un_livre(self):
+        print('mod')
+
+    def supprimer_un_livre(self):
+        print('suup')
 class WindowManager(ScreenManager):
     pass
 kv = Builder.load_file('My.kv')

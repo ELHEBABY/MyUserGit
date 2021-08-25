@@ -2,8 +2,6 @@ WindowManager:
     Accueil:
     User:
     MyGrid:
-    Secondwindow:
-    ThirdWindow:
     Profil:
     Paswdmodif:
 <Accueil>:
@@ -69,8 +67,8 @@ WindowManager:
             background_normal: ''
             on_release:
                 a=root.signin()
-                if a==2 : app.root.current='User'
-                elif a == 1 or a == 0 : app.root.current='MyGrid'
+                if a==2   : app.root.current='User'
+                elif a == 1 or a == 0: app.root.current='MyGrid'
         Label:
             id: sp2
 <User>:
@@ -404,336 +402,433 @@ WindowManager:
             BoxLayout:
 <MyGrid>:
     name: "MyGrid"
+    id:main_win
+    orientation : "vertical"
+    spacing : 10
+    space_x :self.size[0]/3
     BoxLayout:
-        orientation: 'horizontal'
-        spacing: 40
-        padding:40
-        pos_hint:{"x":.8}
-        pos_hint:{"y":.4}
-        size_hint:(0.9 , 0.2)
-        Button:
-            text:"Livres"
-            background_color: 223/255, 35/255, 45/255, 1
-            on_release:
-                app.root.current = "livre"
-                root.manager.transition.direction = "left"
-        Button:
-            text:"Etudiant"
-            background_color: 223/255, 35/255, 45/255, 1
-            on_release:
-                app.root.current = "user"
-                root.manager.transition.direction = "left"
-        Button:
-            text:"Adhérent"
-            background_color:223/255, 35/255, 45/255, 1
-        Button:
-            text:"Profile"
-            background_color: 223/255, 35/255, 45/255, 1
-
-        Button:
-            text:"Deconexion"
-            background_color: 223/255, 35/255, 45/255, 1
-            on_release:
-                app.root.current = "Accueil"
-                root.manager.transition.direction = "right"
-<Secondwindow>:
-    name: "livre"
-    BoxLayout:
-        canvas.before:
-            Color:
-                rgba: 0, 0, 0, 1
-            Rectangle:
-                size: self.size
-                pos: self.pos
-        BoxLayout:
-            pos_hint: {'top': 0.8}
-            size_hint_x:.3
+        BoxLayout
             orientation: "vertical"
-            #size: root.width, root.height
-            spacing: 15
-            padding: 20
-            ToggleButton:
-                text:"Ajouter un livre"
-                size_hint: (0.7 , 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-                on_release:root.modifier_livre()
-                group:'modifier'
-            ToggleButton:
-                text:"Modifier un livre"
-                size_hint: (0.7, 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-                group:'modifier'
-            ToggleButton:
-                text:"Supprimer un livre"
-                size_hint: (0.7 , 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-                group:'modifier'
-            Button:
-                text:"Retour"
-                size_hint: (0.7 , 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-                on_release:
-                    app.root.current = "MyGrid"
-                    root.manager.transition.direction = "right"
-            Label:
-                id:nom
-        BoxLayout:
-            orientation: "vertical"
-            size_hint_x:.8
-            size_hint_y:.3
-            pos_hint:{"y":.7}
-            spacing: 10
-            padding: 30
-            canvas.before:
-                Color:
-                    rgba:0, 0,0, 1
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-            BoxLayout:
+            size_hint_x:.25
+            Accordion:
                 orientation: "vertical"
-                spacing:10
-                BoxLayout:
-                    ToggleButton:
-                        text:"Informatique"
-                        id:info
-                        name:"info"
-                        #size_hint: (0.5, 0.1)
-                        background_color: 223/255, 35/255, 45/255, 1
-                        on_state:root.test(self)
-                        group:'admin'
-                    ToggleButton:
-                        text:"Mathématique"
-                        id:mathematique
-                        #size_hint: (0.4 , 0.1)
-                        on_state:root.test(self)
-                        background_color: 223/255, 35/255, 45/255, 1
-                        group:'admin'
-                    ToggleButton:
-                        text:"Physique, Chimie"
-                        id:pc
-                        #size_hint: (0.4 , 0.1)
-                        on_state:root.test(self)
-                        background_color: 223/255, 35/255, 45/255, 1
-                        group:'admin'
-                    ToggleButton:
-                        text:"Biologie, Géologie"
-                        id:bio
-                        #size_hint: (0.4 , 0.1)
-                        on_state:root.test(self)
-                        background_color:223/255, 35/255, 45/255, 1
-                        group:'admin'
-                    ToggleButton:
-                        text:"Autre"
-                        id:autre
-                        #size_hint: (0.4 , 0.1)
-                        on_state:root.test(self)
-                        background_color: 223/255, 35/255, 45/255, 1
-                        group:'admin'
-            BoxLayout:
-                id:aff
-                cols:1
-                ScreenManager:
-                    id:scr_mng
-                    Screen:
-                    Screen:
-                        id:scr_info
-                        name:"scr_info"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor_info
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout_info
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:scr_math
-                        name:"scr_math"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor_math
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout_math
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:scr_phy
-                        name:"scr_phy"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor_pc
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout_pc
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:scr_bio
-                        name:"scr_bio"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor_bio
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout_bio
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:scr_autre
-                        name:"scr_autre"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor_autre
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout_autre
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:scr
-                        name:"scr"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:scr_rech
-                        name:"scr_rech"
-                        RecycleView:
-                            viewclass: 'CustomLabel'
-                            id: table_floor_rech
-                            spacing:10
-                            padding:20
-                            RecycleGridLayout:
-                                id: table_floor_layout_rech
-                                cols: 5
-                                default_size: (None,250)
-                                default_size_hint: (1,None)
-                                size_hint_y: None
-                                height: self.minimum_height
-                                spacing: 5
-                    Screen:
-                        id:modifier_livre
-                        name:"modifier_livre"
-                        BoxLayout :
-                            orientation : 'vertical'
-                            spacing: 30
-                            #size_hint_y : None
-                            #size_hint:(0.5,1.6)
-                            #height : 100
-                            TextInput :
-                                id: ISBN_field
-                                hint_text : 'ISBN'
-                                multiline : False
-                                focus : True
-                                on_text_validate: Titre_field.focus = True
-                            TextInput :
-                                id: Titre_field
-                                hint_text : 'Titre'
-                                multiline : False
-                                on_text_validate: Auteur_field.focus = True
-                            TextInput :
-                                id: Auteur_field
-                                hint_text : 'Auteur'
-                                multiline : False
-                                on_text_validate: categorie_field.focus = True
-                            TextInput :
-                                id: categorie_field
-                                hint_text : 'categorie'
-                                multiline : False
-                                on_text_validate: Disponibilité_field.focus = True
-                            TextInput :
-                                id: Disponibilité_field
-                                hint_text : 'Disponibilité'
-                                multiline : False
-                        BoxLayout
-                            Label:
-                                id: sp
-                                size_hint_y: None
-                                #height : 40
-                            Button :
-                                text : "Confirmer"
-                                #size_hint_y :None
-                                #height : 20
-                                #size_hint: (0.4,0.2)
-                                background_color: (.50, .2, .73, 1)
-                                background_normal: ''
-                            Label:
-                                id: sp2
-
-<ThirdWindow>
-    name: "user"
-    BoxLayout:
-        canvas.before:
-            Color:
-                rgba: 0, 0, 0, 1
-            Rectangle:
-                size: self.size
-                pos: self.pos
+                AccordionItem:
+                    title:"Livres"
+                    text:"Livres"
+                    on_touch_down:root.change_screen(self)
+                    BoxLayout
+                        orientation: "vertical"
+                        ToggleButton:
+                            text:"Ajouter un livre"
+                            #size_hint: (0.7 , 0.2)
+                            background_color: 223/255, 35/255, 45/255, 1
+                            on_state:root.change_screen_toog(self)
+                            group:'livres'
+                        ToggleButton:
+                            text:"Modifier un livre"
+                            #size_hint: (0.7, 0.2)
+                            background_color: 223/255, 35/255, 45/255, 1
+                            on_state:root.change_screen_toog(self)
+                            group:'livres'
+                        ToggleButton:
+                            text:"Supprimer un livre"
+                            #size_hint: (0.7 , 0.2)
+                            background_color: 223/255, 35/255, 45/255, 1
+                            group:'livres'
+                            on_state:root.change_screen_toog(self)
+                AccordionItem:
+                    title:"Etudiant"
+                    on_touch_down:root.change_screen(self)
+                    BoxLayout
+                        orientation: "vertical"
+                        Button:
+                            text:"Ajouter un Adhérent"
+                            background_color: 223/255, 35/255, 45/255, 1
+                        Button:
+                            text:"Modifier un Adhérent"
+                            background_color: 223/255, 35/255, 45/255, 1
+                        Button:
+                            text:"Supprimer un Adhérent"
+                            background_color: 223/255, 35/255, 45/255, 1
+                AccordionItem:
+                    title:"Adhérent"
+                    on_touch_down:root.change_screen(self)
+                AccordionItem:
+                    title:"Profile"
+                    on_touch_down:root.change_screen(self)
+            Button:
+                size_hint_y:.1
+                text:'Deconexion'
         BoxLayout:
-            pos_hint: {'top': 0.8}
-            size_hint_x:.3
-            orientation: "vertical"
-            #size: root.width, root.height
-            spacing: 15
-            padding: 20
-            Button:
-                text:"Ajouter un Adhérent"
-                size_hint: (0.3 , 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-            Button:
-                text:"Modifier un Adhérent"
-                size_hint: (0.3, 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-            Button:
-                text:"Supprimer un Adhérent"
-                size_hint: (0.3 , 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-            Button:
-                text:"Retour"
-                size_hint: (0.3 , 0.2)
-                background_color: 223/255, 35/255, 45/255, 1
-                on_release:
-                    app.root.current = "MyGrid"
-                    root.manager.transition.direction = "right"
-            Label:
-                id:nom
+            id:tout_les_choix
+            cols:1
+            ScreenManager:
+                id:tout
+                Screen:
+                Screen:
+                    id:livres
+                    name:"livres"
+                    BoxLayout:
+                        orientation: "vertical"
+                        #size_hint_x:.8
+                        #size_hint_y:.3
+                        #pos_hint:{"y":.7}
+                        spacing: 10
+                        padding: 10
+                        canvas.before:
+                            Color:
+                                rgba:0, 0,0, 1
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+                        BoxLayout:
+                            orientation: "vertical"
+                            spacing:10
+                            size_hint_y:.15
+                            BoxLayout:
+                                spacing:5
+                                ToggleButton:
+                                    text:"Informatique"
+                                    id:info
+                                    name:"info"
+                                    size_hint_x: 0.55
+                                    background_color: 223/255, 35/255, 45/255, 1
+                                    on_state:root.test(self)
+                                    group:'admin'
+                                ToggleButton:
+                                    text:"Mathématique"
+                                    id:mathematique
+                                    size_hint_x: 0.65
+                                    on_state:root.test(self)
+                                    background_color: 223/255, 35/255, 45/255, 1
+                                    group:'admin'
+                                ToggleButton:
+                                    text:"Physique, Chimie"
+                                    id:pc
+                                    size_hint_x: 0.75
+                                    on_state:root.test(self)
+                                    background_color: 223/255, 35/255, 45/255, 1
+                                    group:'admin'
+                                ToggleButton:
+                                    text:"Biologie, Géologie"
+                                    id:bio
+                                    size_hint_x: 0.75
+                                    on_state:root.test(self)
+                                    background_color:223/255, 35/255, 45/255, 1
+                                    group:'admin'
+                                ToggleButton:
+                                    text:"Autre"
+                                    id:autre
+                                    size_hint_x: 0.4
+                                    on_state:root.test(self)
+                                    background_color: 223/255, 35/255, 45/255, 1
+                                    group:'admin'
+                        BoxLayout:
+                            size_hint:.7,.12
+                            pos_hint:{'x':.2,}
+                            TextInput:
+                                id:book_name
+                                hint_text:"books"
+                                font_size:25
+                                focus : True
+                                multiline:False
+                                size_hint_x:2
+                                on_text_validate:chercher.focus=True
+                            Button:
+                                id:chercher
+                                #size_hint_x:.4
+                                text:"chercher"
+                                color:(1,1,1,1)
+                                on_release:
+                                    root.recherche()
+                        BoxLayout:
+                            id:aff
+                            cols:1
+                            #height:400
+                            canvas.before:
+                                Color:
+                                    rgba:(240/255,240/255,240/255,240/255)
+                                Rectangle:
+                                    pos:self.pos
+                                    size:self.size
+                            BoxLayout
+                                ScreenManager:
+                                    id:scr_mng
+                                    Screen:
+                                    Screen:
+                                        id:scr_info
+                                        name:"scr_info"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor_info
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout_info
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:scr_math
+                                        name:"scr_math"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor_math
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout_math
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:scr_phy
+                                        name:"scr_phy"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor_pc
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout_pc
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:scr_bio
+                                        name:"scr_bio"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor_bio
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout_bio
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:scr_autre
+                                        name:"scr_autre"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor_autre
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout_autre
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:scr
+                                        name:"scr"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:scr_rech
+                                        name:"scr_rech"
+                                        RecycleView:
+                                            viewclass: 'CustomLabel'
+                                            id: table_floor_rech
+                                            spacing:10
+                                            padding:20
+                                            RecycleGridLayout:
+                                                id: table_floor_layout_rech
+                                                cols: 5
+                                                default_size: (None,250)
+                                                default_size_hint: (1,None)
+                                                size_hint_y: None
+                                                height: self.minimum_height
+                                                spacing: 5
+                                    Screen:
+                                        id:modifier_livre
+                                        name:"modifier_livre"
+                                        BoxLayout :
+                                            orientation : 'vertical'
+                                            spacing: 30
+                                            #size_hint_y : None
+                                            #size_hint:(0.5,1.6)
+                                            #height : 100
+                                            TextInput :
+                                                id: ISBN_field
+                                                hint_text : 'ISBN'
+                                                multiline : False
+                                                focus : True
+                                                on_text_validate: Titre_field.focus = True
+                                            TextInput :
+                                                id: Titre_field
+                                                hint_text : 'Titre'
+                                                multiline : False
+                                                on_text_validate: Auteur_field.focus = True
+                                            TextInput :
+                                                id: Auteur_field
+                                                hint_text : 'Auteur'
+                                                multiline : False
+                                                on_text_validate: categorie_field.focus = True
+                                            TextInput :
+                                                id: categorie_field
+                                                hint_text : 'categorie'
+                                                multiline : False
+                                                on_text_validate: Disponibilité_field.focus = True
+                                            TextInput :
+                                                id: Disponibilité_field
+                                                hint_text : 'Disponibilité'
+                                                multiline : False
+                                        BoxLayout
+                                            Label:
+                                                id: sp
+                                                size_hint_y: None
+                                                #height : 40
+                                            Button :
+                                                text : "Confirmer"
+                                                #size_hint_y :None
+                                                #height : 20
+                                                #size_hint: (0.4,0.2)
+                                                background_color: (.50, .2, .73, 1)
+                                                background_normal: ''
+                                            Label:
+                                                id: sp2
+                        BoxLayout:
+                            id:aff
+                            cols:1
+                            size_hint_y:.3
+                            #height:400
+                            canvas.before:
+                                Color:
+                                    rgba:(240/255,240/255,240/255,240/255)
+                                Rectangle:
+                                    pos:self.pos
+                                    size:self.size
+                            BoxLayout
+                                ScreenManager:
+                                    id:livre
+                                    Screen:
+                                        id:scr
+                                        name:'scr'
+                                    Screen:
+                                        id:ajouter_un_livre
+                                        name:"ajouter_un_livre"
+                                        BoxLayout:
+                                            orientation:'vertical'
+                                            spacing:10
+                                            padding:10
+                                            BoxLayout:
+                                                spacing:10
+                                                TextInput
+                                                    id:a
+                                                    size_hint_x:.5
+                                                    hint_text:'ISBN'
+                                                Spinner
+                                                    id:id_spinner
+                                                    text:'Catégorie'
+                                                    values:['Infor','Maths','Pc','Biologie,Géologie']
+                                                TextInput
+                                                    id:c
+                                                    hint_text:'Titre'
+                                                TextInput
+                                                    id:d
+                                                    hint_text:'Auteur'
+                                                Spinner
+                                                    id:id_spinner
+                                                    text:'Dispo'
+                                                    values:['Oui','Non']
+                                                    size_hint_x:.5
+                                            BoxLayout
+                                                spacing:10
+                                                size_hint_x:.3
+                                                pos_hint:{"x":.6}
+                                                Button:
+                                                    text:"Ajouter un livre"
+                                                    background_color: 223/255, 35/255, 45/255, 1
+                                                    on_release:root.ajouter_un_livre()
+                                    Screen:
+                                        id:modifier_un_livre
+                                        name:"modifier_un_livre"
+                                        BoxLayout:
+                                            orientation:'vertical'
+                                            spacing:10
+                                            padding:10
+                                            BoxLayout:
+                                                spacing:10
+                                                TextInput
+                                                    id:a
+                                                    size_hint_x:.5
+                                                    hint_text:'ISBN'
+                                                Spinner
+                                                    id:id_spinner
+                                                    text:'Catégorie'
+                                                    values:['Infor','Maths','Pc','Biologie,Géologie']
+                                                TextInput
+                                                    id:c
+                                                    hint_text:'Titre'
+                                                TextInput
+                                                    id:d
+                                                    hint_text:'Auteur'
+                                                Spinner
+                                                    id:id_spinner
+                                                    text:'Dispo'
+                                                    values:['Oui','Non']
+                                                    size_hint_x:.5
+                                            BoxLayout
+                                                spacing:10
+                                                size_hint_x:.3
+                                                pos_hint:{"x":.6}
+                                                Button:
+                                                    text:"Modifier un livre"
+                                                    background_color: 223/255, 35/255, 45/255, 1
+                                                    on_release:root.modifier_un_livre()
+                                    Screen:
+                                        id:supprimer_un_livre
+                                        name:"supprimer_un_livre"
+                                        BoxLayout:
+                                            #orientation:'vertical'
+                                            spacing:10
+                                            padding:10
+                                            size_hint:.5,.5
+                                            pos_hint:{"center_x":.5,"center_y":.5}
+                                            BoxLayout:
+                                                spacing:10
+                                                TextInput
+                                                    id:a
+                                                    size_hint_x:.1
+                                                    hint_text:'ISBN'
+                                            BoxLayout
+                                                spacing:10
+                                                size_hint_x:1
+                                                pos_hint:{"x":.6}
+                                                Button:
+                                                    text:"Supprimer un livre"
+                                                    background_color: 223/255, 35/255, 45/255, 1
+                                                    on_release:root.supprimer_un_livre()
+
+
 
 <RoundedButton@Button>:
     background_color:(0,0,0,0)

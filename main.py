@@ -91,11 +91,6 @@ class Accueil(Screen):
         #if self.password()!="123":
          #   self.ids.erreur.text="erreur"
 class User(Screen):
-    info=0
-    math=0
-    phy=0
-    bio=0
-    autr=0
     def __init__(self,table='', **kwargs):
         super().__init__(**kwargs)
 
@@ -246,6 +241,29 @@ class MyGrid(Screen):
         if instance.text == 'Livres':
             self.ids.tout.current = 'livres'
 
+    def reset_ajouter_un_livre(self):
+        self.ids.deja_exist.color = 1, 0, 0, 0
+        self.ids.ok.color = 1, 0, 0, 0
+        self.ids.ajouter_ISBN.text = ''
+        self.ids.ajouter_spinner.text = 'Catégorie'
+        self.ids.ajouter_Titre.text = ''
+        self.ids.ajouter_Auteur.text = ''
+        self.ids.ajouter_Dispo.text = 'Dispo'
+
+    def reset_modifier_un_livre(self):
+        self.ids.update_ok = 1, 0, 0, 0
+        self.ids.n_exist_pas = 1, 0, 0, 0
+        self.ids.modifier_ISBN.text = ''
+        self.ids.modifier_Categorie.text = 'Catégorie'
+        self.ids.modifier_Titre.text = ''
+        self.ids.modifier_Auteur.text = ''
+        self.ids.modifier_Dispo.text = 'Dispo'
+
+    def reset_supprimer_un_livre(self):
+        self.ids.supprimer_erreur.color = 1, 0, 0, 0
+        self.ids.supprimer_ok.color = 1, 0, 0, 0
+        self.ids.supprimer_ISBN.text = ''
+
     def change_screen_toog(self, instance):
         if instance.state == "down":
             if instance.text == 'Mathématique':
@@ -258,10 +276,16 @@ class MyGrid(Screen):
                 self.ids.tout.current = 'scr_autre'
             elif instance.text == "Ajouter un livre":
                 self.ids.livre.current = 'ajouter_un_livre'
+                self.reset_supprimer_un_livre()
+                self.reset_modifier_un_livre()
             elif instance.text == "Modifier un livre":
                 self.ids.livre.current = 'modifier_un_livre'
+                self.reset_ajouter_un_livre()
+                self.reset_supprimer_un_livre()
             elif instance.text == "Supprimer un livre":
                 self.ids.livre.current = 'supprimer_un_livre'
+                self.reset_ajouter_un_livre()
+                self.reset_modifier_un_livre()
         else:
             self.ids.livre.current = 'scr'
 
@@ -429,13 +453,73 @@ class MyGrid(Screen):
             self.test_titre(book)
 
     def ajouter_un_livre(self):
-        print('ajout')
+        self.ids.deja_exist.color = 1, 0, 0, 0
+        if self.ids.ajouter_spinner.text == "Catégorie":
+            self.ids.ajouter_spinner.text = "Autre"
+        if self.ids.ajouter_Dispo.text == "Dispo":
+            self.ids.ajouter_Dispo.text = "Oui"
+        k = 0
+        for x in livres:
+            if int(self.ids.ajouter_ISBN.text) == x[1]:
+                k = 1
+        if k == 1:
+            print("deja")
+            self.ids.deja_exist.color = 1, 0, 0, 1
+            self.ids.book_name.text = self.ids.ajouter_ISBN.text
+            self.recherche()
+        else:
+            mycurser.execute('INSERT INTO Livres (Categorie,ISBN,Titre,Id_auteur,Disponible)'
+                             ' VALUES (%s,%s,%s,%s,%s)', (
+                             self.ids.ajouter_spinner.text, self.ids.ajouter_ISBN.text, self.ids.ajouter_Titre.text,
+                             self.ids.ajouter_Auteur.text, self.ids.ajouter_Dispo.text))
+            mydb.commit()
+            self.reset_ajouter_un_livre()
+            self.ids.ok.color = 1, 0, 0, 1
 
     def modifier_un_livre(self):
-        print('mod')
+        self.ids.n_exist_pas.color = 1, 0, 0, 0
+        if self.ids.modifier_Categorie.text == "Catégorie":
+            self.ids.modifier_Categorie.text = "Autre"
+        if self.ids.modifier_Dispo.text == "Dispo":
+            self.ids.modifier_Dispo.text = "Oui"
+        k = 0
+        if self.ids.modifier_ISBN.text != '':
+            for x in livres:
+                if int(self.ids.modifier_ISBN.text) == x[1]:
+                    k = 1
+        if k == 0:
+            self.ids.n_exist_pas.color = 1, 0, 0, 1
+        else:
+            sql = "UPDATE Livres SET Categorie=%s,Titre=%s,Id_auteur=%s,Disponible=%s WHERE ISBN=%s"
+            data = (self.ids.modifier_Categorie.text, self.ids.modifier_Titre.text, self.ids.modifier_Auteur.text,
+                    self.ids.modifier_Dispo.text, self.ids.modifier_ISBN.text)
+            mycurser.execute(sql, data)
+            mydb.commit()
+            self.ids.book_name.text = self.ids.modifier_ISBN.text
+            self.recherche()
+            self.reset_modifier_un_livre()
+            self.ids.update_okK.color = 1, 0, 0, 1
 
     def supprimer_un_livre(self):
-        print('suup')
+        # self.ids.supprimer_erreur.color = 1, 0, 0, 0
+        k = 0
+        if self.ids.supprimer_ISBN.text != '':
+            for x in livres:
+                if int(self.ids.supprimer_ISBN.text) == x[1]:
+                    k = 1
+        if k == 0:
+            self.ids.supprimer_erreur.color = 1, 0, 0, 1
+            pass
+        else:
+            sql = "DELETE FROM Livres WHERE ISBN = %s "
+            data = (self.ids.supprimer_ISBN.text,)
+            mycurser.execute(sql, data)
+            mydb.commit()
+            self.ids.book_name.text = self.ids.supprimer_ISBN.text
+            self.reset_supprimer_un_livre()
+            self.ids.supprimer_ok.color = 1, 0, 0, 1
+
+    # datetime.now()
 class WindowManager(ScreenManager):
     pass
 kv = Builder.load_file('My.kv')

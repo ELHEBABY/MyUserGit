@@ -742,29 +742,40 @@ WindowManager:
                                             BoxLayout:
                                                 spacing:10
                                                 TextInput
-                                                    id:a
+                                                    id:ajouter_ISBN
                                                     size_hint_x:.5
                                                     hint_text:'ISBN'
                                                 Spinner
-                                                    id:id_spinner
+                                                    id:ajouter_spinner
                                                     text:'Catégorie'
                                                     values:['Infor','Maths','Pc','Biologie,Géologie']
                                                 TextInput
-                                                    id:c
+                                                    id:ajouter_Titre
                                                     hint_text:'Titre'
                                                 TextInput
-                                                    id:d
+                                                    id:ajouter_Auteur
                                                     hint_text:'Auteur'
                                                 Spinner
-                                                    id:id_spinner
+                                                    id:ajouter_Dispo
                                                     text:'Dispo'
                                                     values:['Oui','Non']
                                                     size_hint_x:.5
                                             BoxLayout
                                                 spacing:10
-                                                size_hint_x:.3
-                                                pos_hint:{"x":.6}
+                                                Label:
+                                                    size_hint_x:.3
+                                                Label:
+                                                    id:deja_exist
+                                                    size_hint_x:.3
+                                                    text:"Cette livre et déja exist"
+                                                    color:1,0,0,0
+                                                Label:
+                                                    id:ok
+                                                    size_hint_x:.3
+                                                    text:"OK"
+                                                    color:1,0,0,0
                                                 Button:
+                                                    size_hint_x:.5
                                                     text:"Ajouter un livre"
                                                     background_color: 223/255, 35/255, 45/255, 1
                                                     on_release:root.ajouter_un_livre()
@@ -778,29 +789,40 @@ WindowManager:
                                             BoxLayout:
                                                 spacing:10
                                                 TextInput
-                                                    id:a
+                                                    id:modifier_ISBN
                                                     size_hint_x:.5
                                                     hint_text:'ISBN'
                                                 Spinner
-                                                    id:id_spinner
+                                                    id:modifier_Categorie
                                                     text:'Catégorie'
                                                     values:['Infor','Maths','Pc','Biologie,Géologie']
                                                 TextInput
-                                                    id:c
+                                                    id:modifier_Titre
                                                     hint_text:'Titre'
                                                 TextInput
-                                                    id:d
+                                                    id:modifier_Auteur
                                                     hint_text:'Auteur'
                                                 Spinner
-                                                    id:id_spinner
+                                                    id:modifier_Dispo
                                                     text:'Dispo'
                                                     values:['Oui','Non']
                                                     size_hint_x:.5
                                             BoxLayout
                                                 spacing:10
-                                                size_hint_x:.3
-                                                pos_hint:{"x":.6}
+                                                Label:
+                                                    size_hint_x:.3
+                                                Label:
+                                                    id:n_exist_pas
+                                                    size_hint_x:.3
+                                                    text:"Cette livre n'exist pas"
+                                                    color:1,0,0,0
+                                                Label:
+                                                    id:update_okK
+                                                    size_hint_x:.3
+                                                    text:"update_ok"
+                                                    color:1,0,0,0
                                                 Button:
+                                                    size_hint_x:.5
                                                     text:"Modifier un livre"
                                                     background_color: 223/255, 35/255, 45/255, 1
                                                     on_release:root.modifier_un_livre()
@@ -808,25 +830,41 @@ WindowManager:
                                         id:supprimer_un_livre
                                         name:"supprimer_un_livre"
                                         BoxLayout:
-                                            #orientation:'vertical'
+                                            orientation:'vertical'
                                             spacing:10
                                             padding:10
-                                            size_hint:.5,.5
+                                            #size_hint:.2,.5
                                             pos_hint:{"center_x":.5,"center_y":.5}
-                                            BoxLayout:
-                                                spacing:10
-                                                TextInput
-                                                    id:a
-                                                    size_hint_x:.1
-                                                    hint_text:'ISBN'
                                             BoxLayout
-                                                spacing:10
-                                                size_hint_x:1
-                                                pos_hint:{"x":.6}
-                                                Button:
-                                                    text:"Supprimer un livre"
-                                                    background_color: 223/255, 35/255, 45/255, 1
-                                                    on_release:root.supprimer_un_livre()
+                                                size_hint_y:.2
+                                                #pos_hint:{'center_x':.2}
+                                                Label
+                                                Label
+                                                    id:supprimer_erreur
+                                                    text:"Cette livre n'exist pas"
+                                                    color:1, 0, 0,0
+                                                Label
+                                                    id:supprimer_ok
+                                                    text:"supprimer_ok"
+                                                    color:1, 0, 0, 0
+                                                Label
+                                            BoxLayout:
+                                                size_hint:.5,.8
+                                                pos_hint:{'center_x':.6}
+                                                BoxLayout:
+                                                    spacing:10
+                                                    TextInput
+                                                        id:supprimer_ISBN
+                                                        size_hint_x:.1
+                                                        hint_text:'ISBN'
+                                                BoxLayout
+                                                    spacing:10
+                                                    Button:
+                                                        text:"Supprimer un livre"
+                                                        background_color: 223/255, 35/255, 45/255, 1
+                                                        on_release:root.supprimer_un_livre()
+                                            BoxLayout
+                                                size_hint_y:.4
 
 
 
